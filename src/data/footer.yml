@@ -44,7 +44,20 @@ columns:
     link: "mailto:team@pareto.ai"
 
 footer_bottom:
-- Code of conduct
-- Privacy policy
-- Terms
-- Cookies
+- label: Code of conduct
+  link: "#"
+- label: Privacy policy
+  link: "#"
+- label: Terms
+  link: "#"
+- label: Cookies
+  link: "#"
+social:
+- label: facebook
+  link: https://www.facebook.com/hellopareto
+- label: twitter
+  link: https://www.twitter.com/hellopareto
+- label: instagram
+  link: https://www.instagram.com/hellopareto
+- label: threads
+  link: https://www.threads.net/@hellopareto

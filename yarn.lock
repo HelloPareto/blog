@@ -993,7 +993,7 @@
     "@babel/plugin-transform-modules-commonjs" "^7.27.1"
     "@babel/plugin-transform-typescript" "^7.27.1"
 
-"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.20.13", "@babel/runtime@^7.21.0", "@babel/runtime@^7.9.2":
+"@babel/runtime@^7.0.0", "@babel/runtime@^7.12.5", "@babel/runtime@^7.20.13", "@babel/runtime@^7.21.0", "@babel/runtime@^7.24.8", "@babel/runtime@^7.9.2":
   version "7.27.1"
   resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.1.tgz#9fce313d12c9a77507f264de74626e87fd0dc541"
   integrity sha512-1x3D2xEk2fRo3PAhwQwu5UubzgiVWSXTBfWpVd2Mx2AzRqJuDJCsgaDVZ7HB5iGzDW1Hl1sWN2mFyKjmR9uAog==
@@ -9411,6 +9411,13 @@ react-server-dom-webpack@0.0.0-experimental-c8b778b7f-20220825:
     acorn "^6.2.1"
     loose-envify "^1.1.0"
     neo-async "^2.6.1"
+
+react-social-icons@^6.24.0:
+  version "6.24.0"
+  resolved "https://registry.yarnpkg.com/react-social-icons/-/react-social-icons-6.24.0.tgz#7ff5f1a4f9bfd839ce3929f21dde5400c265f007"
+  integrity sha512-1YlJe2TOf/UwPi2JAb8Ci7J207owP806Tpxu36o4EkB1/jLjGhi83xbCHOagoMyPozTZrPnZIGgvp1LiiWGuZw==
+  dependencies:
+    "@babel/runtime" "^7.24.8"
 
 react@^18.1.0:
   version "18.3.1"

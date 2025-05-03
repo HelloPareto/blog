@@ -22,7 +22,7 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <ol style={{ listStyle: `none` }}>
+      <ol className="container list-none grid md:grid-cols-2">
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
 
@@ -38,7 +38,7 @@ const BlogIndex = ({ data, location }) => {
                        alt={post.frontmatter.title} 
                        width={350}
                        height={197}
-                  />
+                  /> 
                   <h2>
                     <Link to={post.fields.slug} itemProp="url">
                       <span itemProp="headline">{title}</span>
