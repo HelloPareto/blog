@@ -1,0 +1,14 @@
+- name: Use cases
+  submenu:
+  - label: MATS, UC London, and Anthropic
+    link: '#'
+- name: Ops services
+  submenu:
+  - label: Outsourced ops assistants 
+    link: '#'
+  - label: How it works
+    link: '#'
+  - label: Explore ops solutions
+    link: '#'
+- name: Blog
+  link: /
