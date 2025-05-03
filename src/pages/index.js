@@ -1,7 +1,6 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
 
-import Bio from "../components/bio"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 
@@ -12,7 +11,6 @@ const BlogIndex = ({ data, location }) => {
   if (posts.length === 0) {
     return (
       <Layout location={location} title={siteTitle}>
-        <Bio />
         <p>
           No blog posts found. Add markdown posts to "content/blog" (or the
           directory you specified for the "gatsby-source-filesystem" plugin in
@@ -24,7 +22,6 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <Bio />
       <ol style={{ listStyle: `none` }}>
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
@@ -37,12 +34,19 @@ const BlogIndex = ({ data, location }) => {
                 itemType="http://schema.org/Article"
               >
                 <header>
+                  <img src={post.frontmatter.image} 
+                       alt={post.frontmatter.title} 
+                       width={350}
+                       height={197}
+                  />
                   <h2>
                     <Link to={post.fields.slug} itemProp="url">
                       <span itemProp="headline">{title}</span>
                     </Link>
                   </h2>
-                  <small>{post.frontmatter.date}</small>
+                  <p>{post.frontmatter.category}</p>
+                  <p>{post.frontmatter.author}</p>
+
                 </header>
                 <section>
                   <p
@@ -77,18 +81,24 @@ export const pageQuery = graphql`
         title
       }
     }
+
     allMarkdownRemark(sort: { frontmatter: { date: DESC } }) {
       nodes {
         excerpt
         fields {
           slug
         }
+
         frontmatter {
           date(formatString: "MMMM DD, YYYY")
           title
           description
+          image
+          author
+          category
         }
       }
     }
   }
+
 `

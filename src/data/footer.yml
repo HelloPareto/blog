@@ -1,0 +1,50 @@
+title: Premier AI & LLM Training Data by Elite Teams
+columns:
+- name: Use Cases
+  items:
+  - label: RLHF
+    link: "#"
+  - label: Second Use Case
+    link: "#"
+  - label: Number Three
+    link: "#"
+  - label: Use Case Four
+    link: "#"
+  - label: Use Case Number Five
+    link: "#"
+- name: Ops Services
+  items:
+  - label: Extended Ops Team
+    link: "#"
+  - label: B2B Lead Generation
+    link: "#"
+  - label: Influencer Lead Generation
+    link: "#"
+  - label: Investor Lead Generation
+    link: "#"
+  - label: Candidate Sourcing
+    link: "#"
+  - label: Data Migration
+    link: "#"
+  - label: Ops for Startups
+    link: "#"
+- name: About
+  items:
+  - label: About Pareto
+    link:  "#"
+  - label: Our Roles
+    link:  "#"
+  - label: FAQ
+    link:  "#"
+  - label: Blog
+    link: "#"
+- name: Contact
+  items:
+  - label: team@pareto.ai
+    link: "mailto:team@pareto.ai"
+
+footer_bottom:
+- Code of conduct
+- Privacy policy
+- Terms
+- Cookies
