@@ -4,7 +4,7 @@
 
 @layer base {
   * {
-    color: #212429;
+    color: #262628;
   }
 
   .dark * {
@@ -15,7 +15,7 @@
   }
 
   h1 {
-    font-size: 50px;
+    @apply text-4xl lg:text-7xl my-8 lg:mt-12 leading-[150%] lg:leading-[132%]; 
   }
 
   h2 {
@@ -23,7 +23,7 @@
   }
 
   h3 {
-    font-size: 28px;
+    @apply text-xl lg:text-2xl font-medium leading-[150%] ; 
   }
 }
 

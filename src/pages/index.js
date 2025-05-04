@@ -22,7 +22,7 @@ const BlogIndex = ({ data, location }) => {
 
   return (
     <Layout location={location} title={siteTitle}>
-      <ol className="container list-none grid md:grid-cols-2">
+      <ol className="container list-none grid gap-8 md:grid-cols-2">
         {posts.map(post => {
           const title = post.frontmatter.title || post.fields.slug
 
