@@ -1,47 +1,52 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
 
+import { TableOfContents } from "../components/TableOfContents"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
+import ShareButtons from "../components/share_buttons"
 import Clock from "../assets/svg/clock.svg"
 
 const BlogPostTemplate = ({
-  data: { previous, next, site, markdownRemark: post },
-  location,
+  data: { previous, next, site, related, markdownRemark: post },
+  location, pageContext,
 }) => {
   const siteTitle = site.siteMetadata?.title || `Title`
+  /* console.log("---POST---",post, "context", pageContext, "hhh", related) */
   return (
     <Layout location={location} title={siteTitle}>
-        <article
-          className="container min-w-280px py-12 lg:py-8 "
-          itemScope
-          itemType="http://schema.org/Article"
-        >
-          <header>
-            <h1 itemProp="headline"
-              className="text-3xl lg:text-5xl items-center"
-            >
-              {post.frontmatter.title}
-            </h1>
-            <div className="flex gap-8 mb-8">
-              <span className="py-2 text-[#93959b]">{post.frontmatter.author}</span>
-              <span className="py-2 text-[#93959b]">{post.frontmatter.date}</span>
-              <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full">
-                <Clock style={{ width: "20px", height: "20px", stroke: "white" }} />
-                <span className=" text-white ">{post.timeToRead} min</span>
-              </div>
-              <Link to={`/c/${post.fields.category}`}
-                className="py-[6px] px-4 bg-gray-200 rounded-full"
-              >
-                {post.frontmatter.category}
-              </Link>
+      <article
+        className="container min-w-280px py-12 lg:py-8 "
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <header>
+          <h1 itemProp="headline"
+            className="text-3xl lg:text-5xl items-center"
+          >
+            {post.frontmatter.title}
+          </h1>
+          <div className="flex gap-8 mb-8">
+            <span className="py-2 text-[#93959b]">{post.frontmatter.author}</span>
+            <span className="py-2 text-[#93959b]">{post.frontmatter.date}</span>
+            <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full">
+              <Clock style={{ width: "20px", height: "20px", stroke: "white" }} />
+              <span className=" text-white ">{post.timeToRead} min</span>
             </div>
+            <Link to={`/c/${post.fields.category}`}
+              className="py-[6px] px-4 bg-gray-200 rounded-full"
+            >
+              {post.frontmatter.category}
+            </Link>
+            <ShareButtons/>
+          </div>
           <div class="aspect-[2/1] overflow-hidden rounded-2xl my-6 ">
-            <img src={post.frontmatter.mainImage} alt={`image for ${post.title}`}
+            <img src={post.frontmatter.mainImage} alt={`for ${post.title}`}
               className="w-full" />
           </div>
-          </header>
-          <div class="flex flex-col md:flex-row gap-8 container">
+        </header>
+
+        <div class="flex flex-col md:flex-row gap-8 container">
 
           <section
             dangerouslySetInnerHTML={{ __html: post.html }}
@@ -49,14 +54,13 @@ const BlogPostTemplate = ({
             className="markdown prose"
           />
           <hr />
-        <div className="md:w-[300px]">
-          <aside
-            dangerouslySetInnerHTML={{ __html: post.tableOfContents }}
-            className="markdown prose min-w-[280px] max-w-[300px] post_sidebar sticky top-20 p-5 border rounded-2xl"
-          />
+          <div className="md:w-[300px]">
+            <aside className="min-w-[280px] max-w-[300px] post_sidebar sticky top-20 p-5 border rounded-2xl">
+              <TableOfContents tocHtml={post.tableOfContents} />
+            </aside>
+          </div>
         </div>
-      </div>
-        </article>
+      </article>
 
       <nav className="blog-post-nav container">
         <ul
@@ -70,20 +74,35 @@ const BlogPostTemplate = ({
         >
           <li>
             {previous && (
-              <Link to={previous.fields.slug} rel="prev">
+              <Link to={previous.fields.slug} rel="prev" className="text-blue-600 hover:text-blue-700">
                 ← {previous.frontmatter.title}
               </Link>
             )}
           </li>
           <li>
             {next && (
-              <Link to={next.fields.slug} rel="next">
+              <Link to={next.fields.slug} rel="next" className="text-blue-600 hover:text-blue-700">
                 {next.frontmatter.title} →
               </Link>
             )}
           </li>
         </ul>
       </nav>
+
+      {/* Related Posts */}
+
+      <section className="container">
+        <h2>You might also like</h2>
+        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+          {post.related?.nodes.map((article,index) => (
+            <div className="border rounded-2xl p-5" key={index}>
+              <a href={`/${article.fields.slug}`}>
+                <h3>{article.frontmatter.title}</h3>
+              </a>
+            </div>
+          ))}
+        </ul>
+      </section>
     </Layout>
   )
 }
@@ -128,9 +147,9 @@ export const pageQuery = graphql`
         mainImage
       }
 
-        fields {
-          category
-        }
+      fields {
+        category
+      }
     }
 
     previous: markdownRemark(id: { eq: $previousPostId }) {
@@ -150,6 +169,25 @@ export const pageQuery = graphql`
 
       frontmatter {
         title
+      }
+    }
+
+    related: allMarkdownRemark {
+      nodes {
+        id
+        excerpt(pruneLength: 140)
+        timeToRead
+        frontmatter {
+          title
+          author
+          category
+          mainImage
+          date(formatString: "MMMM DD, YYYY")
+        }
+
+        fields {
+          slug
+        }
       }
     }
   }

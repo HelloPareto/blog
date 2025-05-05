@@ -25,6 +25,9 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
             id
             frontmatter {
               category
+              relatedArticles {
+                slug
+              }
             }
 
             fields {
@@ -47,21 +50,28 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
   const postsPerPage = 8
   const numPages = Math.ceil(posts.length / postsPerPage)
 
-  // 📄 CREATE SINGLE POST PAGES
-  posts.forEach(({ node }, index) => {
-    const previousPostId = index === 0 ? null : posts[index - 1].node.id
-    const nextPostId = index === posts.length - 1 ? null : posts[index + 1].node.id
+ // 📄 CREATE SINGLE POST PAGES
+posts.forEach(({ node }, index) => {
+  const previousPostId = index === 0 ? null : posts[index - 1].node.id
+  const nextPostId = index === posts.length - 1 ? null : posts[index + 1].node.id
 
-    createPage({
-      path: node.fields.slug,
-      component: blogPost,
-      context: {
-        id: node.id,
-        previousPostId,
-        nextPostId,
-      },
-    })
+  const normalizeSlug = slug => slug.replace(/^\/|\/$/g, "")
+
+  const relatedArticleSlugs = (node.frontmatter.relatedArticles || []).map(article =>
+    normalizeSlug(article.slug)
+  )
+
+  createPage({
+    path: node.fields.slug,
+    component: blogPost,
+    context: {
+      id: node.id,
+      previousPostId,
+      nextPostId,
+      relatedArticleSlugs,
+    },
   })
+})
 
   // 📚 CREATE PAGINATED LIST
   Array.from({ length: numPages }).forEach((_, i) => {
