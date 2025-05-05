@@ -10,7 +10,7 @@ const Page = ({ data, pageContext }) => {
         <h1>Blog</h1>
         <CategoriesBar />
 
-        <div className="grid md:grid-cols-3 gap-[24px] md:gap-y-12">
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-[24px] md:gap-y-12">
           {posts.map(({ node }, i) => {
             const title = node.frontmatter.title || node.fields.slug
             return (
@@ -25,23 +25,27 @@ const Page = ({ data, pageContext }) => {
                     backgroundImage: `url(${node.frontmatter.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
+                    backgroundColor: "#ccc",
                   }}
                 >
-                 {/*  <img src={node.frontmatter.image}
-                    alt={`Image for ${node.frontmatter.title}`}
-                    width={350}
-                    height={197}
-                    className="min-w-[100%] min-h-[100%] w-auto h-auto"
-                  /> */}
                 </div>
-                
+
                 <div>
-                  <div className="p-6 flex flex-col justify-between">
-                    <h3 >
-                      <Link to={node.fields.slug} itemProp="url">
-                        <span itemProp="headline">{title}</span>
-                      </Link>
-                    </h3>
+                  <div className="p-6 flex flex-col justify-between h-full">
+                    <div>
+                      <h3 className="mb-5">
+                        <Link to={node.fields.slug} itemProp="url">
+                          <span itemProp="headline">{title}</span>
+                        </Link>
+                      </h3>
+                      {i === 0 ?
+                        <p className="hidden md:block">
+                          {node.frontmatter.description || node.excerpt}
+                        </p>
+                        : ""
+                      }
+                    </div>
+
                     <div class={`flex gap-5 flex-col ${i === 0 ? "md:flex-row md:justify-between" : ""}`}>
                       <p>{node.frontmatter.category}</p>
                       <p>{node.frontmatter.author}</p>
@@ -52,14 +56,14 @@ const Page = ({ data, pageContext }) => {
             )
           })}
         </div>
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "2rem" }}>
+        <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3rem" }}>
           {pageContext.currentPage > 1 && (
-            <Link to={pageContext.currentPage === 2 ? "/blog" : `/blog/${pageContext.currentPage - 1}`}>
+            <Link to={pageContext.currentPage === 2 ? "/" : `/${pageContext.currentPage - 1}`}>
               ← Newer
             </Link>
           )}
           {pageContext.currentPage < pageContext.numPages && (
-            <Link to={`/blog/${pageContext.currentPage + 1}`}>
+            <Link to={`/${pageContext.currentPage + 1}`}>
               Older →
             </Link>
           )}

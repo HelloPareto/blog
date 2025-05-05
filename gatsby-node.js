@@ -13,69 +13,16 @@ const blogPost = path.resolve(`./src/templates/blog-post.js`)
 /**
  * @type {import('gatsby').GatsbyNode['createPages']}
  */
+
 exports.createPages = async ({ graphql, actions, reporter }) => {
   const { createPage } = actions
 
-  // Get all markdown blog posts sorted by date
   const result = await graphql(`
     {
       allMarkdownRemark(sort: { frontmatter: { date: ASC } }, limit: 1000) {
-        nodes {
-          id
-          fields {
-            slug
-          }
-        }
-      }
-    }
-
-  `)
-
-  if (result.errors) {
-    reporter.panicOnBuild(
-      `There was an error loading your blog posts`,
-      result.errors
-    )
-    return
-  }
-
-  const posts = result.data.allMarkdownRemark.nodes
-
-  // Create blog posts pages
-  // But only if there's at least one markdown file found at "content/blog" (defined in gatsby-config.js)
-  // `context` is available in the template as a prop and as a variable in GraphQL
-
- // SINGLE POST
-  if (posts.length > 0) {
-    posts.forEach((post, index) => {
-      const previousPostId = index === 0 ? null : posts[index - 1].id
-      const nextPostId = index === posts.length - 1 ? null : posts[index + 1].id
-
-      createPage({
-        path: post.fields.slug,
-        component: blogPost,
-        context: {
-          id: post.id,
-          previousPostId,
-          nextPostId,
-        },
-      })
-    })
-  }
-}
-
-// Blog Posts List
-exports.createPages = async ({ graphql, actions, reporter }) => {
-  const { createPage } = actions
-
-  const result = await graphql(`
-    {
-      allMarkdownRemark(
-        sort: { frontmatter: { date: DESC }}
-        limit: 1000
-      ) {
         edges {
           node {
+            id
             frontmatter {
               category
             }
@@ -89,19 +36,37 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     }
 
   `)
-  
+
   if (result.errors) {
-    reporter.panicOnBuild(`Error while running GraphQL query.`)
+    reporter.panicOnBuild(`Error while running GraphQL query.`, result.errors)
     return
   }
 
-  // Create blog-list pages paginate
   const posts = result.data.allMarkdownRemark.edges
+  const blogPost = path.resolve(`./src/templates/blog-post.js`)
   const postsPerPage = 8
   const numPages = Math.ceil(posts.length / postsPerPage)
+
+  // 📄 CREATE SINGLE POST PAGES
+  posts.forEach(({ node }, index) => {
+    const previousPostId = index === 0 ? null : posts[index - 1].node.id
+    const nextPostId = index === posts.length - 1 ? null : posts[index + 1].node.id
+
+    createPage({
+      path: node.fields.slug,
+      component: blogPost,
+      context: {
+        id: node.id,
+        previousPostId,
+        nextPostId,
+      },
+    })
+  })
+
+  // 📚 CREATE PAGINATED LIST
   Array.from({ length: numPages }).forEach((_, i) => {
     createPage({
-      path: i === 0 ? `/blog` : `/blog/${i + 1}`,
+      path: i === 0 ? `/` : `/${i + 1}`,
       component: path.resolve("./src/templates/index.js"),
       context: {
         limit: postsPerPage,
@@ -112,40 +77,38 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
     })
   })
 
+  // 🏷 CREATE CATEGORY PAGES
   const categories = {}
 
-// групуємо пости по категоріях
-posts.forEach(({ node }) => {
-  const category = node.frontmatter.category?.toLowerCase().replace(/\s+/g, "-")
-  if (!category) return
+  posts.forEach(({ node }) => {
+    const category = node.frontmatter.category?.toLowerCase().replace(/\s+/g, "-")
+    if (!category) return
+    if (!categories[category]) {
+      categories[category] = []
+    }
 
-  if (!categories[category]) {
-    categories[category] = []
-  }
+    categories[category].push(node)
+  })
 
-  categories[category].push(node)
-})
+  Object.keys(categories).forEach(category => {
+    const categoryPosts = categories[category]
+    const numPages = Math.ceil(categoryPosts.length / postsPerPage)
 
-// create pages for each category
-
-Object.keys(categories).forEach(category => {
-  const categoryPosts = categories[category]
-  const numPages = Math.ceil(categoryPosts.length / postsPerPage)
-
-  Array.from({ length: numPages }).forEach((_, i) => {
-    createPage({
-      path: i === 0 ? `/c/${category}` : `/c/${category}/${i + 1}`,
-      component: path.resolve("./src/templates/category.js"),
-      context: {
-        category,
-        limit: postsPerPage,
-        skip: i * postsPerPage,
-        numPages,
-        currentPage: i + 1,
-      },
+    Array.from({ length: numPages }).forEach((_, i) => {
+      createPage({
+        path: i === 0 ? `/c/${category}` : `/c/${category}/${i + 1}`,
+        component: path.resolve("./src/templates/category.js"),
+        context: {
+          category,
+          categoryName: categoryPosts[0]?.frontmatter?.category || category,
+          limit: postsPerPage,
+          skip: i * postsPerPage,
+          numPages,
+          currentPage: i + 1,
+        },
+      })
     })
   })
-})
 }
 
 exports.onCreateNode = ({ node, actions, getNode }) => {

@@ -5,54 +5,72 @@ import CategoriesBar from "../components/categoriesBar"
 
 const CategoryPage = ({ data, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
-  console.log("---DATA---", data, pageContext)
-  const { category, currentPage, numPages } = pageContext
+  const { category, categoryName, currentPage, numPages } = pageContext
 
   return (
     <Layout>
-      <div class="container">
-        <h1>Blog: {category}</h1>
+      <div className="container">
+        <h1>Blog: {categoryName}</h1>
         <CategoriesBar />
-    <div class="grid md:grid-cols-2">
-      {posts.map(({ node }) => {
-        const title = node.frontmatter.title || node.fields.slug
-        return (
-          <article
-            className="post-list-item"
-            itemScope
-            itemType="http://schema.org/Article"
-          >
-                <header>
-                  <img src={node.frontmatter.image} 
-                       alt={node.frontmatter.title} 
-                       width={350}
-                       height={197}
-                  /> 
-                  <h2>
-                    <Link to={node.fields.slug} itemProp="url">
-                      <span itemProp="headline">{title}</span>
-                    </Link>
-                  </h2>
-                  <p>{node.frontmatter.category}</p>
-                  <p>{node.frontmatter.author}</p>
-                </header>
-          </article>
-        )
-      })}
-    </div>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-[24px] md:gap-y-12">
+          {posts.map(({ node }, i) => {
+            const title = node.frontmatter.title || node.fields.slug
+            return (
+              <article
+                key={node.fields.slug}
+                className={`block border border-solid border-[#e4e8f3] rounded-2xl overflow-hidden w-full ${i === 0 ? "md:col-span-3 grid md:grid-cols-2 " : ""} ${i === 2 || i === 6 ? "md:col-span-2" : ""}`}
+                itemScope
+                itemType="http://schema.org/Article"
+              >
+                <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}
+                  style={{
+                    backgroundImage: `url(${node.frontmatter.image})`,
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundColor: "#ccc",
+                  }}
+                >
+                </div>
 
-        <div style={{ display: "flex", justifyContent: "space-between", marginTop: "2rem" }}>
-          {currentPage > 1 && (
-            <Link to={currentPage === 2 ? `/c/${category}` : `/c/${category}/${currentPage - 1}`}>
-              ← Never
+                <div>
+                  <div className="p-6 flex flex-col justify-between h-full">
+                    <div>
+                      <h3 className="mb-5">
+                        <Link to={node.fields.slug} itemProp="url">
+                          <span itemProp="headline">{title}</span>
+                        </Link>
+                      </h3>
+                      {i === 0 ?
+                        <p className="hidden md:block">
+                          {node.frontmatter.description || node.excerpt}
+                        </p>
+                        : ""
+                      }
+                    </div>
+
+                    <div class={`flex gap-5 flex-col ${i === 0 ? "md:flex-row md:justify-between" : ""}`}>
+                      <p>{node.frontmatter.category}</p>
+                      <p>{node.frontmatter.author}</p>
+                    </div>
+                  </div>
+                </div>
+              </article>
+            )
+          })}
+        </div>
+
+        <div style={{ display: "flex", justifyContent: "space-around", marginTop: "3rem" }}>
+          {pageContext.currentPage > 1 && (
+            <Link to={pageContext.currentPage === 2 ? "/blog" : `/blog/${pageContext.currentPage - 1}`}>
+              ← Newer
             </Link>
           )}
-          {currentPage < numPages && (
-            <Link to={`/c/${category}/${currentPage + 1}`}>
+          {pageContext.currentPage < pageContext.numPages && (
+            <Link to={`/c/${category}/${pageContext.currentPage + 1}`}>
               Older →
             </Link>
           )}
-        </div>
+        </div>      
       </div>
     </Layout>
   )

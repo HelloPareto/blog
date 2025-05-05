@@ -22,6 +22,17 @@ module.exports = {
     `gatsby-plugin-dark-mode`,
     `gatsby-plugin-use-dark-mode`,
     {
+      resolve: `gatsby-plugin-google-fonts-v2`,
+      options: {
+        fonts: [
+          {
+            family: 'Lato',
+            weights: ['400', '500']
+          },
+        ]
+      }
+    },
+    {
       resolve: `gatsby-source-filesystem`,
       options: {
         path: `${__dirname}/content/blog`,
@@ -40,9 +51,21 @@ module.exports = {
       options: {
         plugins: [
           {
+            resolve: `gatsby-remark-table-of-contents`,
+            options: {
+              exclude: "Table of Contents",
+              tight: false,
+              ordered: false,
+              fromHeading: 1,
+              toHeading: 2,
+              className: "table-of-contents"
+            },
+          },
+          `gatsby-remark-autolink-headers`,
+          {
             resolve: `gatsby-remark-images`,
             options: {
-              maxWidth: 630,
+              maxWidth: 900,
             },
           },
           {
