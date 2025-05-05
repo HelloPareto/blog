@@ -73,7 +73,7 @@ posts.forEach(({ node }, index) => {
   })
 })
 
-  // 📚 CREATE PAGINATED LIST
+  //  CREATE PAGINATED LIST
   Array.from({ length: numPages }).forEach((_, i) => {
     createPage({
       path: i === 0 ? `/` : `/${i + 1}`,
@@ -87,7 +87,7 @@ posts.forEach(({ node }, index) => {
     })
   })
 
-  // 🏷 CREATE CATEGORY PAGES
+  //  CREATE CATEGORY PAGES
   const categories = {}
 
   posts.forEach(({ node }) => {

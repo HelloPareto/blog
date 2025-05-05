@@ -7,12 +7,17 @@ import Seo from "../components/seo"
 import ShareButtons from "../components/share_buttons"
 import Clock from "../assets/svg/clock.svg"
 
-const BlogPostTemplate = ({
-  data: { previous, next, site, related, markdownRemark: post },
-  location, pageContext,
-}) => {
-  const siteTitle = site.siteMetadata?.title || `Title`
-  /* console.log("---POST---",post, "context", pageContext, "hhh", related) */
+const normalizeSlug = slug => slug.replace(/^\/|\/$/g, "")
+
+const BlogPostTemplate = ({ data, location, pageContext }) => {
+  const { markdownRemark: post, site, related, previous, next } = data
+  const siteTitle = site.siteMetadata?.title || "Title"
+  const { relatedArticleSlugs = [] } = pageContext
+
+  const relatedArticles = related.nodes.filter(article =>
+    relatedArticleSlugs.includes(normalizeSlug(article.fields.slug))
+  )
+  console.log("---POST---",post, "context", pageContext, "RELATED", relatedArticles)
   return (
     <Layout location={location} title={siteTitle}>
       <article
@@ -26,7 +31,8 @@ const BlogPostTemplate = ({
           >
             {post.frontmatter.title}
           </h1>
-          <div className="flex gap-8 mb-8">
+
+          <div className="flex gap-8 mb-8 flex-wrap">
             <span className="py-2 text-[#93959b]">{post.frontmatter.author}</span>
             <span className="py-2 text-[#93959b]">{post.frontmatter.date}</span>
             <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full">
@@ -40,6 +46,7 @@ const BlogPostTemplate = ({
             </Link>
             <ShareButtons/>
           </div>
+
           <div class="aspect-[2/1] overflow-hidden rounded-2xl my-6 ">
             <img src={post.frontmatter.mainImage} alt={`for ${post.title}`}
               className="w-full" />
@@ -91,16 +98,16 @@ const BlogPostTemplate = ({
 
       {/* Related Posts */}
 
-      <section className="container">
+      <section className="container my-10">
         <h2>You might also like</h2>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {post.related?.nodes.map((article,index) => (
-            <div className="border rounded-2xl p-5" key={index}>
-              <a href={`/${article.fields.slug}`}>
-                <h3>{article.frontmatter.title}</h3>
-              </a>
-            </div>
-          ))}
+        {relatedArticles.map(article => (
+              <li key={article.id} className="border p-5 rounded-xl">
+                <Link to={`/${normalizeSlug(article.fields.slug)}`}>
+                  <h3>{article.frontmatter.title}</h3>
+                </Link>
+              </li>
+            ))}
         </ul>
       </section>
     </Layout>
