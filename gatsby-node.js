@@ -55,10 +55,10 @@ posts.forEach(({ node }, index) => {
   const previousPostId = index === 0 ? null : posts[index - 1].node.id
   const nextPostId = index === posts.length - 1 ? null : posts[index + 1].node.id
 
-  const normalizeSlug = slug => slug.replace(/^\/|\/$/g, "")
+  const normalizedSlug = slug => slug.replace(/^\/|\/$/g, "")
 
   const relatedArticleSlugs = (node.frontmatter.relatedArticles || []).map(article =>
-    normalizeSlug(article.slug)
+    normalizedSlug(article.slug)
   )
 
   createPage({

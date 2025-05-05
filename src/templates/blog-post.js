@@ -7,17 +7,27 @@ import Seo from "../components/seo"
 import ShareButtons from "../components/share_buttons"
 import Clock from "../assets/svg/clock.svg"
 
-const normalizeSlug = slug => slug.replace(/^\/|\/$/g, "")
+const normalizedSlug = slug => (slug || "").replace(/^\/|\/$/g, "")
 
 const BlogPostTemplate = ({ data, location, pageContext }) => {
   const { markdownRemark: post, site, related, previous, next } = data
   const siteTitle = site.siteMetadata?.title || "Title"
-  const { relatedArticleSlugs = [] } = pageContext
+  const relatedArticleSlugs = Array.isArray(pageContext.relatedArticleSlugs)
+  ? pageContext.relatedArticleSlugs
+  : []
 
-  const relatedArticles = related.nodes.filter(article =>
-    relatedArticleSlugs.includes(normalizeSlug(article.fields.slug))
-  )
-  console.log("---POST---",post, "context", pageContext, "RELATED", relatedArticles)
+  let relatedArticles = []
+
+  try {
+    if (related?.nodes?.length && Array.isArray(relatedArticleSlugs)) {
+      relatedArticles = related.nodes.filter(article =>
+        relatedArticleSlugs.includes(normalizedSlug(article?.fields?.slug || ""))
+      )
+    }
+  } catch (e) {
+    console.error("Error while resolving related articles", e)
+  }
+
   return (
     <Layout location={location} title={siteTitle}>
       <article
@@ -44,12 +54,14 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
             >
               {post.frontmatter.category}
             </Link>
-            <ShareButtons/>
+            <ShareButtons />
           </div>
 
           <div class="aspect-[2/1] overflow-hidden rounded-2xl my-6 ">
-            <img src={post.frontmatter.mainImage} alt={`for ${post.title}`}
-              className="w-full" />
+            {post.frontmatter.mainImage && (
+              <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} />
+            )}
+
           </div>
         </header>
 
@@ -63,7 +75,9 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
           <hr />
           <div className="md:w-[300px]">
             <aside className="min-w-[280px] max-w-[300px] post_sidebar sticky top-20 p-5 border rounded-2xl">
-              <TableOfContents tocHtml={post.tableOfContents} />
+              {post.tableOfContents && (
+                <TableOfContents tocHtml={post.tableOfContents} />
+              )}
             </aside>
           </div>
         </div>
@@ -101,13 +115,13 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
       <section className="container my-10">
         <h2>You might also like</h2>
         <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-        {relatedArticles.map(article => (
-              <li key={article.id} className="border p-5 rounded-xl">
-                <Link to={`/${normalizeSlug(article.fields.slug)}`}>
-                  <h3>{article.frontmatter.title}</h3>
-                </Link>
-              </li>
-            ))}
+          {relatedArticles.map(article => (
+            <li key={article.id} className="border p-5 rounded-xl">
+              <Link to={`/${normalizedSlug(article.fields.slug)}`}>
+                <h3>{article.frontmatter.title}</h3>
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     </Layout>
