@@ -16,7 +16,7 @@ const Page = ({ data, pageContext }) => {
             return (
               <article
                 key={node.fields.slug}
-                className={`block border border-solid border-[#e4e8f3] rounded-2xl overflow-hidden w-full ${i === 0 ? "md:col-span-3 grid md:grid-cols-2 " : ""} ${i === 2 || i === 6 ? "md:col-span-2" : ""}`}
+                className={`block border rounded-2xl overflow-hidden w-full ${i === 0 ? "md:col-span-3 grid md:grid-cols-2 " : ""} ${i === 2 || i === 6 ? "md:col-span-2" : ""}`}
                 itemScope
                 itemType="http://schema.org/Article"
               >

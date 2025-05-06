@@ -26,7 +26,7 @@ const Footer = () => (
         </div>
       ))}
     </div>
-    <div className="grid gap-6 pb-20">.
+    <div className="grid gap-6 pb-20">
       <div className="grid gap-6 md:flex md:justify-between">
         <div className="flex gap-5 justify-between w-full">
           <Logo />
