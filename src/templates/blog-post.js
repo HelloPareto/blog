@@ -13,8 +13,8 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
   const { markdownRemark: post, site, related, previous, next } = data
   const siteTitle = site.siteMetadata?.title || "Title"
   const relatedArticleSlugs = Array.isArray(pageContext.relatedArticleSlugs)
-  ? pageContext.relatedArticleSlugs
-  : []
+    ? pageContext.relatedArticleSlugs
+    : []
 
   let relatedArticles = []
 
@@ -28,6 +28,7 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
     console.error("Error while resolving related articles", e)
   }
 
+  console.log("-------rel---------", relatedArticles)
   return (
     <Layout location={location} title={siteTitle}>
       <article
@@ -70,7 +71,7 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
           <section
             dangerouslySetInnerHTML={{ __html: post.html }}
             itemProp="articleBody"
-            className="markdown prose"
+            className="markdown prose max-w-none"
           />
           <hr />
           <div className="md:w-[300px]">
@@ -112,17 +113,51 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
 
       {/* Related Posts */}
 
-      <section className="container my-10">
-        <h2>You might also like</h2>
-        <ul className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {relatedArticles.map(article => (
-            <li key={article.id} className="border p-5 rounded-xl">
-              <Link to={`/${normalizedSlug(article.fields.slug)}`}>
-                <h3>{article.frontmatter.title}</h3>
-              </Link>
-            </li>
-          ))}
-        </ul>
+      <section className="my-12 not-prose max-w-none">
+        <div className="container">
+          <h2 className="text-2xl font-semibold mb-6">You might also like</h2>
+          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            {relatedArticles.map(article => (
+              <article
+                key={article.fields.slug}
+                className="block border border-solid border-[#e4e8f3] rounded-2xl overflow-hidden w-full"
+                itemScope
+                itemType="http://schema.org/Article"
+              >
+                <Link
+                  to={article.fields.slug}
+                  itemProp="url"
+                  className="no-underline hover:no-underline"
+                >
+                  <div
+                    className="h-48 w-full overflow-hidden md:max-h-[227px] md:min-h-[227px]"
+                    style={{
+                      backgroundImage: `url(${article.frontmatter.mainImage})`,
+                      backgroundSize: "cover",
+                      backgroundPosition: "center",
+                      backgroundColor: "#ccc",
+                    }}
+                  />
+                </Link>
+
+                <div className="p-6 flex flex-col justify-between h-full ">
+                  <h3 className="mb-3 text-base " itemProp="headline">
+                    {article.frontmatter.title}
+                  </h3>
+                  <div class="flex gap-4">
+                    {article.fields.category ?
+                      <Link to={`/c/${article.fields.category}`} className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit">{article.frontmatter.category}</Link> : ""}
+                    <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full w-fit">
+                      <Clock style={{ width: "20px", height: "20px", stroke: "white" }} />
+                      <span className=" text-white ">{article.timeToRead} min</span>
+                    </div>
+                  </div>
+
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
       </section>
     </Layout>
   )
@@ -208,6 +243,7 @@ export const pageQuery = graphql`
 
         fields {
           slug
+          category
         }
       }
     }

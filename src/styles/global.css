@@ -1,10 +1,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-@plugin "@tailwindcss/typography";
 
 @layer base {
-  * {
+  body {
     color: #262628;
     font-family: "Lato", sans-serif;
   }
@@ -16,12 +15,20 @@
     fill: #fff;
   }
 
+  .markdown h1, 
+  .markdown h2,
+  .markdown h3,
+  .markdown h4,
+  .markdown h5 {
+    scroll-margin-top: 100px;
+  }
+
   h1 {
     @apply text-4xl lg:text-7xl my-8 lg:mt-12 leading-[150%] lg:leading-[132%]; 
   }
 
   .markdown h2 {
-    @apply text-2xl md:text-3xl font-semibold pt-20 mb-6;
+    @apply text-2xl md:text-3xl font-semibold mb-6;
   }
 
   .markdown h3 {
@@ -39,6 +46,8 @@
   .post_sidebar ul {
     @apply grid gap-5 ;
   }
+
+  a {text-decoration: none;}
 }
 
 @layer components {
@@ -48,182 +57,5 @@
 
   .container {
     @apply max-w-[1512px] w-full mx-auto px-4 md:px-[30px];
-  }
-
-  .hero {
-    background-image: url("/images/bg_hero.webp");
-    background-size: cover;
-    background-position: center center;
-  }
-
-  .boxesBox {
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-
-    .boxesContent {
-      opacity: 1
-    };
-
-    .boxesHoverContent {
-      opacity: 0
-    };
-
-    &:hover {
-      box-shadow: 0 10px 15px rgba(0, 0, 0, 0.2);
-
-      .boxesContent {
-        opacity: 0
-      };
-
-      .boxesHoverContent {
-        opacity: 1
-      };
-    }
-  }
-
-  .requestForAudit {
-    background-image: url("/images/bg_s1.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-  }
-
-  .signup_heading {
-    background-image: url("/images/bg_s2.webp");
-    background-repeat: no-repeat;
-    background-size: cover;
-    background-position: center center;
-  }
-
-  .text_2 {
-    h2 {
-    @apply text-4xl 2xl:text-[54px] leading-[1.17]  mb-8;}
-    h3 {
-    @apply text-2xl;}
-    p {
-      @apply my-5;
-    }
-  }
-
-  .button-1 {
-    @apply py-3 px-6 my-10 hidden items-center rounded-full font-bold md:flex md:order-1 2xl:order-3 w-fit 2xl:px-8 2xl:py-5 2xl:text-3xl;
-    &:hover{
-    svg {
-      background: transparent;
-       stroke: white;
-      }
-    }
-  }
-
-  .button_cta:hover svg {
-    background: transparent;
-    stroke: white;
-  }
-
-  .content_grid {
-    grid-template-columns: auto 216px;
-    @media(min-width: 1024px){
-      grid-template-columns: auto 256px;
-    }
-  }
-
-.section_heading {
-  p, b {
-    @apply text-base 2xl:text-2xl;
-  }
-}
-
-.about_content {
-  p {
-    margin-bottom: 20px !important;
-  }
-
-  a:not(.button_cta) { color: #628BE6; }
-  a:hover:not(.button_cta) {color: #354084;}
-  a.button_cta:hover {color: white !important} 
-  h2 {
-    font-size: 32px;
-    font-weight: 600;
-    margin-bottom: 30px;
-    @media(min-width: 768px) {
-      & {font-size: 40px;}
-    }
-
-    @media(min-width: 768px) and (max-width: 1536px) {
-     & img {
-        aspect-ratio: 1 / 1;
-        width: 50%;
-       }
-    }
-  }
-}
-
-  main.services .text_1 {
-    h1 {
-      @apply font-semibold text-4xl mb-6 py-3 2xl:text-[40px] leading-[1.2];
-    }
-
-    h2,
-    h3 {
-      @apply font-semibold text-2xl;
-    }
-
-    p {
-      @apply text-lg py-3;
-    }
-  }
-
-  .sidebar_right {
-    @apply text-[14px] text-white md:min-w-[200px] md:w-[205px] lg:w-64;
-
-    .sidebar_inner {
-      @apply top-5 py-4 bg-[#628BF6] rounded-2xl;
-    }
-
-    b {
-      @apply text-white bg-[#628BF6] py-1 px-5 block text-xl;
-    }
-
-    a.button-1 {
-      white-space: nowrap;
-      margin-top: 30px;
-      @media (min-width: 768px) and (max-width: 1023px ) {
-        gap: 0;
-        font-size: 16px;
-      }
-    }
-  }
-
-  .sidebar_links {
-    @apply p-4;
-
-    ul,
-    li {
-      @apply grid gap-3;
-    }
-
-    li,
-    p,
-    a {
-      @apply text-[14px] border-transparent text-white;
-    }
-
-    a {
-      @apply block p-2 hover:text-gray-100;
-    }
-  }
-}
-
-.Accordion {
-  summary {
-    @apply rounded-lg ;
-    svg {
-      @apply stroke-white fill-white;
-    }
-  }
-
-  details[open] summary {
-    svg {
-      @apply stroke-[#212529] fill-[#212529];
-    }
   }
 }
