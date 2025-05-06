@@ -1,11 +1,25 @@
 import * as React from "react"
 import { Link, graphql } from "gatsby"
-
+import AliceCarousel from "react-alice-carousel"
+import "react-alice-carousel/lib/alice-carousel.css"
 import { TableOfContents } from "../components/TableOfContents"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import ShareButtons from "../components/share_buttons"
 import Clock from "../assets/svg/clock.svg"
+
+const responsive = {
+  0: {
+    items: 1,
+  },
+  568: {
+    items: 2,
+  },
+  1024: {
+    items: 3,
+    itemsFit: "contain",
+  },
+}
 
 const normalizedSlug = slug => (slug || "").replace(/^\/|\/$/g, "")
 
@@ -28,58 +42,100 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
     console.error("Error while resolving related articles", e)
   }
 
-  console.log("-------rel---------", relatedArticles)
+  const relatedItems = relatedArticles?.map(article => (
+    <div key={article.fields.slug} className="px-2">
+      <article
+        className="block border rounded-2xl overflow-hidden w-full"
+        itemScope
+        itemType="http://schema.org/Article"
+      >
+        <Link
+          to={article.fields.slug}
+          itemProp="url"
+          className="no-underline hover:no-underline"
+        >
+          <div
+            className="w-full overflow-hidden min-h-40 max-h-40"
+            style={{
+              backgroundImage: `url(${article.frontmatter.mainImage})`,
+              backgroundSize: "cover",
+              backgroundPosition: "center",
+              backgroundColor: "#ccc",
+            }}
+          />
+        </Link>
+
+        <div className="p-6 flex flex-col justify-between h-30 min-h-40">
+          <h3 className="mb-3 text-base " itemProp="headline">
+            {article.frontmatter.title}
+          </h3>
+          <div className="flex gap-4">
+            {article.fields.category ? (
+              <Link
+                to={`/c/${article.fields.category}`}
+                className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit"
+              >
+                {article.frontmatter.category}
+              </Link>
+            ) : null}
+            <div className="flex gap-1 items-center py-[6px] bg-gray-300 dark:bg-gray-400 px-3 rounded-full w-fit">
+              <Clock className="w-5 h-5 stroke-black dark:stroke-white" />
+              <span>{article.timeToRead} min</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  ))
+
   return (
     <Layout location={location} title={siteTitle}>
       <article
-        className="container min-w-280px py-12 lg:py-8 "
+        className="container min-w-280px py-12 lg:py-8"
         itemScope
         itemType="http://schema.org/Article"
       >
         <header>
-          <h1 itemProp="headline"
-            className="text-3xl lg:text-5xl items-center"
-          >
+          <h1 itemProp="headline" className="text-3xl lg:text-5xl items-center">
             {post.frontmatter.title}
           </h1>
 
           <div className="flex gap-8 mb-8 flex-wrap">
             <span className="py-2 text-[#93959b]">{post.frontmatter.author}</span>
             <span className="py-2 text-[#93959b]">{post.frontmatter.date}</span>
-            <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full">
+            <div className="flex gap-1 items-center py-[6px] bg-gray-300 dark:bg-gray-400 px-3 rounded-full">
               <Clock style={{ width: "20px", height: "20px", stroke: "white" }} />
-              <span className=" text-white ">{post.timeToRead} min</span>
+              <span className="text-white">{post.timeToRead} min</span>
             </div>
-            <Link to={`/c/${post.fields.category}`}
-              className="py-[6px] px-4 bg-gray-200 rounded-full"
+            <Link
+              to={`/c/${post.fields.category}`}
+              className="py-[6px] px-4 bg-gray-200 dark:bg-gray-400 rounded-full"
             >
               {post.frontmatter.category}
             </Link>
             <ShareButtons />
           </div>
 
-          <div class="aspect-[2/1] overflow-hidden rounded-2xl my-6 ">
+          {post.frontmatter.mainImage && (
+          <div className="aspect-[2/1] w-full overflow-hidden mt-6 mb-8 rounded-2xl lg:rounded-3xl">
             {post.frontmatter.mainImage && (
-              <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} />
+              <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} className="rounded-2xl lg:rounded-3xl w-full min-h-[100%]"/>
             )}
-
           </div>
+          )}
         </header>
 
-        <div class="flex flex-col md:flex-row gap-8 container">
-
+        <div className="flex flex-col md:flex-row gap-8 container">
           <section
             dangerouslySetInnerHTML={{ __html: post.html }}
             itemProp="articleBody"
-            className="markdown prose max-w-none"
+            className="markdown prose dark:prose-invert max-w-none"
           />
           <hr />
           <div className="md:w-[300px]">
-            <aside className="min-w-[280px] max-w-[300px] post_sidebar sticky top-20 p-5 border rounded-2xl">
-              {post.tableOfContents && (
-                <TableOfContents tocHtml={post.tableOfContents} />
-              )}
-            </aside>
+            {post.tableOfContents && <aside className="min-w-[280px] max-w-[300px] post_sidebar sticky top-20 p-5 border rounded-2xl">
+              <TableOfContents tocHtml={post.tableOfContents} />
+            </aside>}
           </div>
         </div>
       </article>
@@ -111,52 +167,18 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
         </ul>
       </nav>
 
-      {/* Related Posts */}
-
+      {/* Related Posts using AliceCarousel */}
       <section className="my-12 not-prose max-w-none">
         <div className="container">
           <h2 className="text-2xl font-semibold mb-6">You might also like</h2>
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {relatedArticles.map(article => (
-              <article
-                key={article.fields.slug}
-                className="block border border-solid border-[#e4e8f3] rounded-2xl overflow-hidden w-full"
-                itemScope
-                itemType="http://schema.org/Article"
-              >
-                <Link
-                  to={article.fields.slug}
-                  itemProp="url"
-                  className="no-underline hover:no-underline"
-                >
-                  <div
-                    className="h-48 w-full overflow-hidden md:max-h-[227px] md:min-h-[227px]"
-                    style={{
-                      backgroundImage: `url(${article.frontmatter.mainImage})`,
-                      backgroundSize: "cover",
-                      backgroundPosition: "center",
-                      backgroundColor: "#ccc",
-                    }}
-                  />
-                </Link>
-
-                <div className="p-6 flex flex-col justify-between h-full ">
-                  <h3 className="mb-3 text-base " itemProp="headline">
-                    {article.frontmatter.title}
-                  </h3>
-                  <div class="flex gap-4">
-                    {article.fields.category ?
-                      <Link to={`/c/${article.fields.category}`} className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit">{article.frontmatter.category}</Link> : ""}
-                    <div className="flex gap-1 items-center py-[6px] bg-gray-300 px-3 rounded-full w-fit">
-                      <Clock style={{ width: "20px", height: "20px", stroke: "white" }} />
-                      <span className=" text-white ">{article.timeToRead} min</span>
-                    </div>
-                  </div>
-
-                </div>
-              </article>
-            ))}
-          </div>
+          <AliceCarousel
+            mouseTracking
+            items={relatedItems}
+            responsive={responsive}
+            controlsStrategy="alternate"
+            disableDotsControls={true}
+            autoPlay={false}
+          />
         </div>
       </section>
     </Layout>

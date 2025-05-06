@@ -3,19 +3,31 @@ columns:
 - name: Use Cases
   items:
   - label: RLHF
-    link: "#"
-  - label: Second Use Case
-    link: "#"
-  - label: Number Three
-    link: "#"
-  - label: Use Case Four
-    link: "#"
-  - label: Use Case Number Five
-    link: "#"
+    link: https://pareto.ai/rlhf
+  - label: Side by side RL
+    link: https://pareto.ai/reinforcement-learning
+  - label: Original content
+    link: https://pareto.ai/original-content-generation
+  - label: Creative hallucination
+    link: https://pareto.ai/llm-hallucination-testing
+  - label: Safety, ethics, & compliance
+    link: https://pareto.ai/ai-safety-ethics-training
+  - label: Honesty and factuality training
+    link: https://pareto.ai/ai-factuality-training
+  - label: LLM prompting
+    link: https://pareto.ai/llm-prompting
+  - label: Data classification & indexing
+    link: https://pareto.ai/data-classification-and-indexing
+  - label: Engine annotation
+    link: https://pareto.ai/engine-annotation
+  - label: LLM fluency and relevancy grading
+    link: LLM fluency and relevancy grading
+  - label: Chain-of-thought reasoning
+    link: https://pareto.ai/chain-of-thought-reasoning
 - name: Ops Services
   items:
   - label: Extended Ops Team
-    link: "#"
+    link: https://pareto.ai/outsourced-operations
   - label: B2B Lead Generation
     link: "#"
   - label: Influencer Lead Generation
@@ -37,7 +49,7 @@ columns:
   - label: FAQ
     link:  "#"
   - label: Blog
-    link: "#"
+    link: /
 - name: Contact
   items:
   - label: team@pareto.ai

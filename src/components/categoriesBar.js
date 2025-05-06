@@ -50,18 +50,19 @@ const CategoriesBar = () => {
           return (
             <li
               key={slug}
-              className="px-4 py-1 rounded-full text-lg"
+              className="px-4 py-1 rounded-full text-lg bg-gray-200 dark:bg-gray-600 "
               style={{
-                background: isActive ? "#8b6dff" : "#F4F7FD",
+                background: isActive ? "#8b6dff" : "",
               }}
             >
               <Link
                 to={path}
                 style={{
-                  color: isActive ? "white" : "#262628",
+                  color: isActive ? "white" : "",
                   textDecoration: "none",
                   lineHeight: "150%",
                 }}
+                className="text-black dark:text-white"
               >
                 {name} ({count})
               </Link>

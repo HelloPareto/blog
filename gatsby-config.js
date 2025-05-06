@@ -19,7 +19,6 @@ module.exports = {
     `gatsby-plugin-react-svg`,
     `gatsby-plugin-postcss`,
     `gatsby-plugin-image`,
-    `gatsby-plugin-dark-mode`,
     `gatsby-plugin-use-dark-mode`,
     {
       resolve: `gatsby-plugin-google-fonts-v2`,

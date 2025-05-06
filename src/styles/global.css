@@ -8,12 +8,24 @@
     font-family: "Lato", sans-serif;
   }
 
-  .dark * {
+  .dark body svg { 
+    stroke: #fff;
+  }
+
+  .dark body {
     color: #fff;
     background-color: #212429;
     stroke: #fff;
     fill: #fff;
   }
+
+  .dark aside a {
+    color: #fff;
+  }
+
+* {
+  @apply border-gray-200 dark:border-gray-600; 
+}
 
   .markdown h1, 
   .markdown h2,

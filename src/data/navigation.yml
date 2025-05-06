@@ -1,14 +1,14 @@
 - name: Use cases
   submenu:
   - label: MATS, UC London, and Anthropic
-    link: '#'
+    link: https://pareto.ai/case-studies/debate-judgment-mats
 - name: Ops services
   submenu:
   - label: Outsourced ops assistants 
-    link: '#'
+    link: https://pareto.ai/outsourced-operations
   - label: How it works
-    link: '#'
+    link: https://pareto.ai/outsourced-operations/how-it-works
   - label: Explore ops solutions
-    link: '#'
+    link: https://pareto.ai/outsourced-ops-solutions
 - name: Blog
   link: /
