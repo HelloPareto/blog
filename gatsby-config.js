@@ -9,7 +9,7 @@
  */
 module.exports = {
   siteMetadata: {
-    title: `Pareto`,
+    title: `AI, LLM Training, and Operations Efficiency`,
     description: `Learn how to leverage AI, technology and human capital for the future.`,
     author: `Pareto`,
     siteUrl: `https://pareto.ai/`,
