@@ -1,0 +1,47 @@
+backend:
+  name: github
+  #name: git-gateway
+  branch: main
+  repo: vosaul/PARETO
+publish_mode: editorial_workflow
+media_folder: static/images
+public_folder: /images
+
+collections:
+
+- label: Content
+  name: content
+  editor:
+    preview: true
+  folder: /content/blog/
+  fields:
+  - name: layout
+    widget: string
+    default: post
+  - name: title
+    widget: string
+  - name: seoTitleTag
+    widget: string
+  - name: date
+    widget: date
+  - name: slug
+    widget: string
+  - name: description
+    widget: text
+  - name: seoMetaDescription
+    widget: text
+  - name: category
+    widget: string
+  - name: image
+    widget: image
+  - name: mainImage
+    widget: image
+  - name: author
+    widget: string
+  - name: relatedArticles
+    widget: list
+    field:
+      {name: title, widget: string}
+       
+  - name: body
+    widget: markdown

@@ -15,6 +15,12 @@ module.exports = {
     siteUrl: `https://pareto.ai/`,
   },
   plugins: [
+    {
+      resolve: `gatsby-plugin-decap-cms`,
+      options: {
+        enableIdentityWidget: true,
+      },
+    },
     `gatsby-plugin-styled-components`,
     `gatsby-plugin-react-svg`,
     `gatsby-plugin-postcss`,
