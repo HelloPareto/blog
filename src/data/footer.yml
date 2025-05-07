@@ -21,7 +21,7 @@ columns:
   - label: Engine annotation
     link: https://pareto.ai/engine-annotation
   - label: LLM fluency and relevancy grading
-    link: LLM fluency and relevancy grading
+    link: https://pareto.ai/llm-fluency-relevancy-grading
   - label: Chain-of-thought reasoning
     link: https://pareto.ai/chain-of-thought-reasoning
 - name: Ops Services
