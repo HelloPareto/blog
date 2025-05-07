@@ -57,8 +57,10 @@ const Footer = () => (
         <p className="md:hidden">Get premium AI training data.</p>
       </div>
       <button className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit" type="button">
-        <span className="hidden md:block ">Get started</span>
-        <span className="md:hidden">Get started</span>
+        <Link to="/conversion">
+          <span className="hidden md:block ">Get started</span>
+          <span className="md:hidden">Get started</span>
+        </Link>
       </button>
     </div>
 
