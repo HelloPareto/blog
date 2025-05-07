@@ -41,7 +41,7 @@ const Footer = () => (
       <div className="flex gap-4 flex-col md:flex-row md:justify-between items-center text-base md:text-xl">
         <div className="flex gap-4 items-center w-full">
           <span>&copy; Pareto {new Date().getFullYear()}, All Rights Reserved</span>
-          <img src="/svg/wbenc-logo.svg" loading="lazy" className="dark:invert w-16 h-16" />
+          <img src="/svg/wbenc-logo.svg" loading="lazy" className="dark:invert w-16 h-16" alt="Pareto Logo" />
         </div>
         <div className="flex gap-4 lg:gap-8 flex-col sm:flex-row w-full">
           {Data.footer_bottom.map((fb, n) => (
