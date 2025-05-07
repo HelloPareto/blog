@@ -66,10 +66,10 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
               backgroundColor: "#ccc",
             }}
           >
-          <div
-            className="w-full overflow-hidden min-h-40 max-h-40"
-          />
-          
+            <div
+              className="w-full overflow-hidden min-h-40 max-h-40"
+            />
+
           </div>
         </Link>
 
@@ -125,19 +125,18 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
           </div>
 
           {post.frontmatter.mainImage && (
-          <div className="aspect-[2/1] w-full overflow-hidden mt-6 mb-8 rounded-2xl lg:rounded-3xl">
-            {post.frontmatter.mainImage && (
-              <div className="aspect-2/1 w-full rounded-2xl lg:rounded-3xl">
-                {/* <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} className=" w-full min-h-[100%]"/> */}
-                                  <GatsbyImage
-                                    image={image}
-                                    alt={post.frontmatter.title}
-                                    style={{ width: "100%", height: "100%" }}
-                                    imgStyle={{ objectFit: "cover" }}
-                                  />
-              </div>
-            )}
-          </div>
+            <div className="aspect-[2/1] w-full overflow-hidden mt-6 mb-8 rounded-2xl lg:rounded-3xl">
+              {post.frontmatter.mainImage && (
+                <div className="aspect-2/1 w-full rounded-2xl lg:rounded-3xl">
+                  <GatsbyImage
+                    image={image}
+                    alt={post.frontmatter.title}
+                    style={{ width: "100%", height: "100%" }}
+                    imgStyle={{ objectFit: "cover" }}
+                  />
+                </div>
+              )}
+            </div>
           )}
         </header>
 

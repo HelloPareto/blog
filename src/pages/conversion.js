@@ -227,7 +227,7 @@ const NotFoundPage = ({ data, location }) => {
   )
 }
 
-export const Head = () => <Seo title="404: Not Found" />
+export const Head = () => <Seo title="Conversion" />
 
 export default NotFoundPage
 
