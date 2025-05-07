@@ -8,7 +8,6 @@ import CategoriesBar from "../components/categoriesBar"
 
 const Page = ({ data, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
-  console.log(posts[0])
   return (
     <Layout>
       <div className="container">
@@ -26,15 +25,13 @@ const Page = ({ data, pageContext }) => {
                 itemScope
                 itemType="http://schema.org/Article"
               >
-                <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}
-                  /* style={{
-                    backgroundImage: `url(${node.frontmatter.image})`,
-                    backgroundSize: "cover",
-                    backgroundPosition: "center",
-                    backgroundColor: "#ccc",
-                  }} */
-                >
-                  <GatsbyImage image={image} alt={node.frontmatter.title} />
+                <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}>
+                  <GatsbyImage
+                    image={image}
+                    alt={node.frontmatter.title}
+                    style={{ width: "100%", height: "100%" }}
+                    imgStyle={{ objectFit: "cover" }}
+                  />
                 </div>
 
                 <div>
@@ -107,18 +104,18 @@ export const pageQuery = graphql`
             gatsbyImageData(
               formats: WEBP
               placeholder: DOMINANT_COLOR
-              width: 1452
-              aspectRatio: 2
+               layout: CONSTRAINED
             )
           }
-        }        }
+        }        
       }
     }
   }
+}
 
 `
 export const Head = () => (
-  <Seo  
+  <Seo
     title="Pareto Blog"
     image="/images/1.webp"
   />

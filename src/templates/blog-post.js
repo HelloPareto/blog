@@ -2,6 +2,8 @@ import * as React from "react"
 import { Link, graphql } from "gatsby"
 import AliceCarousel from "react-alice-carousel"
 import "react-alice-carousel/lib/alice-carousel.css"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
 import { TableOfContents } from "../components/TableOfContents"
 import Layout from "../components/layout"
 import Seo from "../components/seo"
@@ -24,8 +26,9 @@ const responsive = {
 const normalizedSlug = slug => (slug || "").replace(/^\/|\/$/g, "")
 
 const BlogPostTemplate = ({ data, location, pageContext }) => {
-  const { markdownRemark: post, site, related, previous, next } = data
+  const { markdownRemark: post, site, related, previous, next, localImage } = data
   const siteTitle = site.siteMetadata?.title || "Title"
+  const image = getImage(post.localImage)
   const relatedArticleSlugs = Array.isArray(pageContext.relatedArticleSlugs)
     ? pageContext.relatedArticleSlugs
     : []
@@ -62,7 +65,12 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
               backgroundPosition: "center",
               backgroundColor: "#ccc",
             }}
+          >
+          <div
+            className="w-full overflow-hidden min-h-40 max-h-40"
           />
+          
+          </div>
         </Link>
 
         <div className="p-6 flex flex-col justify-between h-30 min-h-40">
@@ -119,7 +127,15 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
           {post.frontmatter.mainImage && (
           <div className="aspect-[2/1] w-full overflow-hidden mt-6 mb-8 rounded-2xl lg:rounded-3xl">
             {post.frontmatter.mainImage && (
-              <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} className="rounded-2xl lg:rounded-3xl w-full min-h-[100%]"/>
+              <div className="aspect-2/1 w-full rounded-2xl lg:rounded-3xl">
+                {/* <img src={post.frontmatter.mainImage} alt={`for ${post.frontmatter.title}`} className=" w-full min-h-[100%]"/> */}
+                                  <GatsbyImage
+                                    image={image}
+                                    alt={post.frontmatter.title}
+                                    style={{ width: "100%", height: "100%" }}
+                                    imgStyle={{ objectFit: "cover" }}
+                                  />
+              </div>
             )}
           </div>
           )}
@@ -225,6 +241,17 @@ export const pageQuery = graphql`
         seoMetaDescription
         mainImage
       }
+
+        localImage {
+          childImageSharp {
+            gatsbyImageData(
+              formats: WEBP
+              placeholder: DOMINANT_COLOR
+              layout: CONSTRAINED
+              aspectRatio: 2
+            )
+          }
+        }  
 
       fields {
         category

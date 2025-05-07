@@ -1,5 +1,7 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
 import Layout from "../components/layout"
 import CategoriesBar from "../components/categoriesBar"
 import Seo from "../components/seo"
@@ -16,6 +18,8 @@ const CategoryPage = ({ data, pageContext }) => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-[24px] md:gap-y-12">
           {posts.map(({ node }, i) => {
             const title = node.frontmatter.title || node.fields.slug
+            const image = getImage(node.localImage)
+
             return (
               <article
                 key={node.fields.slug}
@@ -24,13 +28,20 @@ const CategoryPage = ({ data, pageContext }) => {
                 itemType="http://schema.org/Article"
               >
                 <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}
-                  style={{
+                  /* style={{
                     backgroundImage: `url(${node.frontmatter.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundColor: "#ccc",
-                  }}
+                  }} */
                 >
+                  <GatsbyImage
+                    image={image}
+                    alt={node.frontmatter.title}
+                    style={{ width: "100%", height: "100%" }}
+                    imgStyle={{ objectFit: "cover" }}
+                  />
+
                 </div>
 
                 <div>
@@ -71,7 +82,7 @@ const CategoryPage = ({ data, pageContext }) => {
               Older →
             </Link>
           )}
-        </div>      
+        </div>
       </div>
     </Layout>
   )
@@ -96,6 +107,16 @@ export const pageQuery = graphql`
             category
           }
 
+          localImage {
+            childImageSharp {
+              gatsbyImageData(
+                formats: WEBP
+                placeholder: DOMINANT_COLOR
+                 layout: CONSTRAINED
+              )
+            }
+          }        
+  
           fields {
             slug
           }
@@ -106,7 +127,7 @@ export const pageQuery = graphql`
 
 `
 export const Head = () => (
-  <Seo  
+  <Seo
     title="Pareto Blog Categories"
     image="/images/1.webp"
   />
