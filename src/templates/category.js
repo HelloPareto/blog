@@ -2,6 +2,7 @@ import React from "react"
 import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import CategoriesBar from "../components/categoriesBar"
+import Seo from "../components/seo"
 
 const CategoryPage = ({ data, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
@@ -104,5 +105,10 @@ export const pageQuery = graphql`
   }
 
 `
-
+export const Head = () => (
+  <Seo  
+    title="Pareto Blog Categories"
+    image="/images/1.webp"
+  />
+)
 export default CategoryPage

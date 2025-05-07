@@ -190,6 +190,7 @@ export const Head = ({ data: { markdownRemark: post } }) => {
     <Seo
       title={post.frontmatter.seoTitleTag || post.frontmatter.title}
       description={post.frontmatter.seoMetaDescription || post.frontmatter.description || post.excerpt}
+      image={post.frontmatter.mainImage}
     />
   )
 }
