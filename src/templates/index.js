@@ -1,11 +1,14 @@
 import React from "react"
 import { graphql, Link } from "gatsby"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
+
 import Layout from "../components/layout"
 import Seo from "../components/seo"
 import CategoriesBar from "../components/categoriesBar"
 
 const Page = ({ data, pageContext }) => {
   const posts = data.allMarkdownRemark.edges
+  console.log(posts[0])
   return (
     <Layout>
       <div className="container">
@@ -15,6 +18,7 @@ const Page = ({ data, pageContext }) => {
         <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-[24px] md:gap-y-12">
           {posts.map(({ node }, i) => {
             const title = node.frontmatter.title || node.fields.slug
+            const image = getImage(node.localImage)
             return (
               <article
                 key={node.fields.slug}
@@ -23,13 +27,14 @@ const Page = ({ data, pageContext }) => {
                 itemType="http://schema.org/Article"
               >
                 <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}
-                  style={{
+                  /* style={{
                     backgroundImage: `url(${node.frontmatter.image})`,
                     backgroundSize: "cover",
                     backgroundPosition: "center",
                     backgroundColor: "#ccc",
-                  }}
+                  }} */
                 >
+                  <GatsbyImage image={image} alt={node.frontmatter.title} />
                 </div>
 
                 <div>
@@ -96,7 +101,17 @@ export const pageQuery = graphql`
             author
             category
           }
-        }
+
+        localImage {
+          childImageSharp {
+            gatsbyImageData(
+              formats: WEBP
+              placeholder: DOMINANT_COLOR
+              width: 1452
+              aspectRatio: 2
+            )
+          }
+        }        }
       }
     }
   }

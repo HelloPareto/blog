@@ -80,6 +80,14 @@ module.exports = {
     `gatsby-transformer-sharp`,
     `gatsby-plugin-sharp`,
     {
+      resolve: `gatsby-plugin-remote-images`,
+      options: {
+        nodeType: 'MarkdownRemark',
+        imagePath: 'frontmatter.image', 
+        name: 'localImage', 
+      },
+    },
+    {
       resolve: `gatsby-plugin-feed`,
       options: {
         query: `
