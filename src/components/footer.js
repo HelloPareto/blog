@@ -15,7 +15,7 @@ const Footer = () => (
     <div className="grid gap-8 grid-cols-2 lg:grid-cols-4">
       {Data.columns.map((col, i) => (
         <div className="col">
-          <h3 className="mb-4 font-medium text-[#262628]">{col.name}</h3>
+          <h3 className="mb-4 font-medium ">{col.name}</h3>
           <ul>
             {col.items.map((item) => (
               <li className="mb-4">
