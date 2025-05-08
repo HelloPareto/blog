@@ -26,12 +26,14 @@ const Page = ({ data, pageContext }) => {
                 itemType="http://schema.org/Article"
               >
                 <div class={`h-48 w-full overflow-hidden ${i === 0 ? "md:h-[421px]" : "md:max-h-[227px] md:min-h-[227px]"}`}>
+                <Link to={node.fields.slug} itemProp="url">
                   <GatsbyImage
                     image={image}
                     alt={node.frontmatter.title}
                     style={{ width: "100%", height: "100%" }}
                     imgStyle={{ objectFit: "cover" }}
                   />
+                  </Link>
                 </div>
 
                 <div>
