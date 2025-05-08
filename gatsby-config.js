@@ -13,6 +13,8 @@ module.exports = {
     description: `Learn how to leverage AI, technology and human capital for the future.`,
     author: `Pareto`,
     siteUrl: `https://pareto.ai/`,
+    formActionId: `QBFNC9hYM`,
+    formActionRedirect: `https://pareto-test.netlify.app/`,
   },
   plugins: [
     {

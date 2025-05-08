@@ -13,12 +13,13 @@ const ConversionPage = ({ data, location }) => {
   const handleNext = () => setStep(prev => Math.min(prev + 1, totalSteps - 1))
   const handleBack = () => setStep(prev => Math.max(prev - 1, 0))
   const handleReset = () => setStep(0)
-
+console.log("---action---",data.site.siteMetadata, location)
   return (
     <Layout location={location} title={siteTitle}>
       <div className="container conversion prose dark:prose-invert">
         <h1>Get ready to join forces!</h1>
-        <form action="https://submit-form.com/QBFNC9hYM">
+        <form action={`https://submit-form.com/${data.site.siteMetadata.formActionId}`}> 
+        {/* "https://submit-form.com/QBFNC9hYM" */}
           {[...Array(totalSteps)].map((_, i) => (
             <div
               key={i}
@@ -124,7 +125,7 @@ const ConversionPage = ({ data, location }) => {
                 <>
                   <p className="font-semibold">Last but not least! What are you hoping to accomplish with Pareto?</p>
                   <textarea id="leadDescription" name="leadDescription" rows="10" className="textarea border p-5 w-full" placeholder="Describe any project ideas or task examples"></textarea>
-                  <input type="hidden" name="_redirect" value="https://pareto-test.netlify.app/conversion" />
+                  <input type="hidden" name="_redirect" value={data.site.siteMetadata.formActionRedirect} />
                 </>
               )}
 
@@ -153,6 +154,8 @@ export const pageQuery = graphql`
   query {
     site {
       siteMetadata {
+        formActionId
+        formActionRedirect
         title
       }
     }
