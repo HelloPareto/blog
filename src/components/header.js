@@ -57,7 +57,7 @@ const Header = () => {
                     {/* desktop: show if hover */}
                     <ul
                       className={`
-                        absolute top-full left-0 bg-white shadow-md min-w-[200px]
+                        absolute top-full left-0 bg-white dark:bg-[#312c35] shadow-md min-w-[200px]
                         opacity-0 translate-y-2 pointer-events-none transition-all duration-300
                         group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
                         hidden md:block z-50 p-4 rounded-xl
