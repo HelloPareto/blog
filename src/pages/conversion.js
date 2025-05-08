@@ -13,7 +13,6 @@ const ConversionPage = ({ data, location }) => {
   const handleNext = () => setStep(prev => Math.min(prev + 1, totalSteps - 1))
   const handleBack = () => setStep(prev => Math.max(prev - 1, 0))
   const handleReset = () => setStep(0)
-console.log("---action---",data.site.siteMetadata, location)
   return (
     <Layout location={location} title={siteTitle}>
       <div className="container conversion prose dark:prose-invert">

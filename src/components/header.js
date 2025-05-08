@@ -58,14 +58,16 @@ const Header = () => {
                     <ul
                       className={`
                         absolute top-full left-0 bg-white dark:bg-[#312c35] shadow-md min-w-[200px]
-                        opacity-0 translate-y-2 pointer-events-none transition-all duration-300
-                        group-hover:opacity-100 group-hover:translate-y-0 group-hover:pointer-events-auto
+                        opacity-0 translate-y-2 pointer-events-none 
+                        transition-all duration-300
+                        group-hover:opacity-100 group-hover:translate-y-0
+                        group-hover:pointer-events-auto
                         hidden md:block z-50 p-4 rounded-xl
                       `}
                     >
                       {item.submenu.map((sub, n) => (
                         <li key={n}>
-                          <a href={sub.link} className="block px-4 py-2 hover:bg-gray-100">
+                          <a href={sub.link} className="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-700">
                             {sub.label}
                           </a>
                         </li>
