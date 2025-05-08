@@ -23,7 +23,7 @@ collections:
   - name: seoTitleTag
     widget: string
   - name: date
-    widget: date
+    widget: datetime
   - name: slug
     widget: string
   - name: description
@@ -40,8 +40,15 @@ collections:
     widget: string
   - name: relatedArticles
     widget: list
-    field:
-      {name: title, widget: string}
-       
+    fields:
+    - {name: title, widget: string}
+    - {name: slug, widget: string}
+    - {name: categoryName, widget: string}
+  - name: publishedOn
+    widget: datetime     
+  - name: updatedAt
+    widget: datetime     
+  - name: createdAt
+    widget: datetime     
   - name: body
     widget: markdown

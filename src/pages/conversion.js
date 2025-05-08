@@ -129,13 +129,13 @@ const ConversionPage = ({ data, location }) => {
               )}
 
               <div className="mt-4 flex gap-4">
-                {i > 0 && <button type="button" onClick={handleBack}>Back</button>}
+                {i > 0 && <button type="button" onClick={handleBack}>← Back</button>}
                 {i < totalSteps - 1 ? (
-                  <button type="button" onClick={handleNext}>Next</button>
+                  <button type="button" onClick={handleNext}>Next →</button>
                 ) : (
                   <button type="submit" className="py-2 px-8 text-white bg-blue-700 rounded-full">Send</button>
                 )}
-                <button type="button" onClick={handleReset}>Reset</button>
+                <button type="button" onClick={handleReset}>Reset ⤬</button>
               </div>
             </div>
           ))}

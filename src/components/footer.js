@@ -29,12 +29,18 @@ const Footer = () => (
     <div className="grid gap-6 pb-20">
       <div className="grid gap-6 md:flex md:justify-between">
         <div className="flex gap-5 justify-between w-full">
-          <Logo />
+          <Logo className="icon"/>
           <ThemeToggle cls="block md:hidden" />
         </div>
-        <div className="flex gap-12 mx-auto w-full justify-center">
+        <div className="social_icons flex gap-12 mx-auto w-full justify-center">
           {Data.social.map((s, i) => (
-            <SocialIcon url={s.link} key={i} label="s.label" style={{ height: 22, width: 22 }} />
+            <SocialIcon 
+               url={s.link} 
+               key={i} label={s.label} 
+               style={{ height: 28, width: 28, color: "#000" }} 
+               bgColor="#fff"
+               fgColor="#000"
+            />
           ))}
         </div>
       </div>

@@ -35,7 +35,7 @@ const Page = ({ data, pageContext }) => {
                 </div>
 
                 <div>
-                  <div className="p-6 flex flex-col justify-between h-full">
+                  <div className="p-5 flex flex-col justify-between h-full">
                     <div>
                       <h3 className="mb-5">
                         <Link to={node.fields.slug} itemProp="url">
@@ -50,7 +50,7 @@ const Page = ({ data, pageContext }) => {
                       }
                     </div>
 
-                    <div class={`flex gap-5 flex-col ${i === 0 ? "md:flex-row md:justify-between" : ""}`}>
+                    <div class={`flex gap-3 flex-col ${i === 0 ? "md:flex-row md:justify-between" : ""}`}>
                       <p>{node.frontmatter.category}</p>
                       <p>{node.frontmatter.author}</p>
                     </div>

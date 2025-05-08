@@ -247,6 +247,7 @@ export const pageQuery = graphql`
               formats: WEBP
               placeholder: DOMINANT_COLOR
               layout: CONSTRAINED
+              width: 1452
               aspectRatio: 2
             )
           }

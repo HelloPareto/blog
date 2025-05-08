@@ -23,8 +23,8 @@ const Header = () => {
     <header className=" p-5 bg-white dark:bg-[#312c35] border-b z-20 sticky top-0">
       <div class="header_inner flex justify-between items-center container">
         <Link to="/" className="flex gap-2" aria-label="Site Logo" onClick={() => setNavbarOpen(false)}>
-          <LogoT className="hidden md:block dark:fill-white" />
-          <Logo className="md:hidden" />
+          <LogoT className="icon hidden md:block dark:fill-white" />
+          <Logo className="icon md:hidden" />
         </Link>
         <Toggle onClick={() => setNavbarOpen(!navbarOpen)}>
           <Hamburger open={navbarOpen} />
@@ -49,7 +49,7 @@ const Header = () => {
                     >
                       {item.name}
                       <Down
-                        className={`transition-transform duration-200 ${
+                        className={`icon transition-transform duration-200 ${
                           openSubmenuIndex === i ? "rotate-180" : ""
                         }`}
                       />

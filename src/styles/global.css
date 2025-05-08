@@ -4,13 +4,22 @@
 
 @layer base {
   body {
-    color: #262628;
+    color: #7C7D83;
     font-family: "Lato", sans-serif;
   }
 
-  .dark body svg { 
-    stroke: #fff;
+h1, h2, h3, h4, h5 {color: #262628; }
+.dark h1, .dark h2, .dark h3, .dark h4, .dark h5 {color: #fff; }
+  .dark body .icon path,
+  .dark body .icon g,
+  .dark body .icon { 
+    fill: white;
   }
+
+.dark .social_icons svg .path,
+.dark .social_icons svg .social-svg-icon {
+  fill: black;
+}
 
   input, 
   select, 
