@@ -27,12 +27,15 @@ const Header = () => {
           <Logo className="icon md:hidden" />
         </Link>
         <Toggle onClick={() => setNavbarOpen(!navbarOpen)}>
-          <Hamburger open={navbarOpen} />
+          <Hamburger open={navbarOpen} className="text-black dark:text-white" />
         </Toggle>
         <nav
           className={`${
             navbarOpen ? "flex" : "hidden"
-          } flex-col md:flex md:flex-row gap-4 items-start md:items-center absolute md:static top-[10vh] left-0 w-full md:w-auto bg-white md:bg-transparent p-5 md:p-0 shadow-md md:shadow-none`}
+          } flex-col md:flex md:flex-row gap-4 items-start md:items-center 
+          absolute md:static top-[68px] left-0 w-full md:w-auto h-[100vh] md:h-auto
+          bg-white dark:bg-gray-800 md:bg-transparent 
+          p-5 md:p-0 shadow-md md:shadow-none`}
         >
           <ul className="flex flex-col md:flex-row gap-4 w-full md:w-auto lg:gap-8 items-center">
             {nav.map((item, i) => (
@@ -122,7 +125,8 @@ const Toggle = styled.div`
 `;
 
 const Hamburger = styled.div`
-  background-color: #223;
+  color: inherit;
+  background-color: currentColor;
   width: 30px;
   height: 3px;
   transition: all 0.3s linear;
@@ -134,7 +138,7 @@ const Hamburger = styled.div`
   &::after {
     width: 30px;
     height: 3px;
-    background-color: #223;
+    background-color: currentColor;
     content: "";
     position: absolute;
     transition: all 0.3s linear;
