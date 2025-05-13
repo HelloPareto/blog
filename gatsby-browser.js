@@ -10,7 +10,7 @@ import "@fontsource/merriweather"
 import "prismjs/themes/prism.css"
 import './src/styles/global.css'
 
-exports.onClientEntry = () => {
+export const onClientEntry = () => {
   if (typeof window !== "undefined") {
     const hash = window.location.hash;
     if (hash.startsWith("#invite_token=")) {
