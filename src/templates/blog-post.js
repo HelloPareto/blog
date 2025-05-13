@@ -28,13 +28,12 @@ const normalizedSlug = slug => (slug || "").replace(/^\/|\/$/g, "")
 const BlogPostTemplate = ({ data, location, pageContext }) => {
   const { markdownRemark: post, site, related, previous, next, localImage } = data
   const siteTitle = site.siteMetadata?.title || "Title"
-  const image = getImage(post.localImage)
+  const image = getImage(post.localImage?.childImageSharp)
   const relatedArticleSlugs = Array.isArray(pageContext.relatedArticleSlugs)
     ? pageContext.relatedArticleSlugs
     : []
 
   let relatedArticles = []
-
   try {
     if (related?.nodes?.length && Array.isArray(relatedArticleSlugs)) {
       relatedArticles = related.nodes.filter(article =>
@@ -48,7 +47,7 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
   const relatedItems = relatedArticles?.map(article => (
     <div key={article.fields.slug} className="px-2">
       <article
-        className="block border rounded-2xl overflow-hidden w-full"
+        className="block border rounded-2xl overflow-hidden w-full  bg-gray-50 hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700"
         itemScope
         itemType="http://schema.org/Article"
       >
@@ -63,35 +62,30 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
               backgroundImage: `url(${article.frontmatter.mainImage})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
-              backgroundColor: "#ccc",
             }}
-          >
-            <div
-              className="w-full overflow-hidden min-h-40 max-h-40"
-            />
+          ></div>
 
+          <div className="p-6 flex flex-col justify-between h-30 min-h-40">
+            <h3 className="mb-3 text-base " itemProp="headline">
+              {article.frontmatter.title}
+            </h3>
+            <div className="flex gap-4">
+              {article.fields.category ? (
+                <Link
+                  to={`/c/${article.fields.category}`}
+                  className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit"
+                >
+                  {article.frontmatter.category}
+                </Link>
+              ) : null}
+              <div className="flex gap-1 items-center py-[6px] bg-gray-300 dark:bg-gray-400 px-3 rounded-full w-fit">
+                <Clock className="w-5 h-5 stroke-black dark:stroke-white" />
+                <span>{article.timeToRead} min</span>
+              </div>
+            </div>
           </div>
         </Link>
 
-        <div className="p-6 flex flex-col justify-between h-30 min-h-40">
-          <h3 className="mb-3 text-base " itemProp="headline">
-            {article.frontmatter.title}
-          </h3>
-          <div className="flex gap-4">
-            {article.fields.category ? (
-              <Link
-                to={`/c/${article.fields.category}`}
-                className="py-[6px] px-4 bg-blue-500 text-white rounded-full w-fit"
-              >
-                {article.frontmatter.category}
-              </Link>
-            ) : null}
-            <div className="flex gap-1 items-center py-[6px] bg-gray-300 dark:bg-gray-400 px-3 rounded-full w-fit">
-              <Clock className="w-5 h-5 stroke-black dark:stroke-white" />
-              <span>{article.timeToRead} min</span>
-            </div>
-          </div>
-        </div>
       </article>
     </div>
   ))
@@ -127,7 +121,7 @@ const BlogPostTemplate = ({ data, location, pageContext }) => {
           {post.frontmatter.mainImage && (
             <div className="aspect-[2/1] w-full overflow-hidden mt-6 mb-8 rounded-2xl lg:rounded-3xl">
               {post.frontmatter.mainImage && (
-                <div className="aspect-2/1 w-full rounded-2xl lg:rounded-3xl">
+                <div className="aspect-2/1 w-full rounded-2xl lg:rounded-3xl overflow-hidden">
                   <GatsbyImage
                     image={image}
                     alt={post.frontmatter.title}
@@ -247,7 +241,7 @@ export const pageQuery = graphql`
               formats: WEBP
               placeholder: DOMINANT_COLOR
               layout: CONSTRAINED
-              width: 1452
+              width: 1281
               aspectRatio: 2
             )
           }
