@@ -1,6 +1,6 @@
 backend:
-  name: github
-  #name: git-gateway
+  #name: github
+  name: git-gateway
   branch: main
   repo: vosaul/PARETO
 publish_mode: editorial_workflow
