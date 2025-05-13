@@ -1,8 +1,9 @@
 backend:
   #name: github
   name: git-gateway
+  #repo: vosaul/PARETO
+  repo: HelloPareto/blog
   branch: main
-  repo: vosaul/PARETO
 publish_mode: editorial_workflow
 media_folder: static/images
 public_folder: /images
