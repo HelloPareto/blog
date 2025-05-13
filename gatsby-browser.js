@@ -9,3 +9,13 @@ import "@fontsource/merriweather"
 // Highlighting for code blocks
 import "prismjs/themes/prism.css"
 import './src/styles/global.css'
+
+exports.onClientEntry = () => {
+  if (typeof window !== "undefined") {
+    const hash = window.location.hash;
+    if (hash.startsWith("#invite_token=")) {
+      const newUrl = `/admin/${hash}`;
+      window.location.replace(newUrl);
+    }
+  }
+};
