@@ -14,11 +14,11 @@ const Footer = () => (
     </header>
     <div className="grid gap-8 grid-cols-2 lg:grid-cols-4">
       {Data.columns.map((col, i) => (
-        <div className="col">
+        <div className="col" key={i}>
           <h3 className="mb-4 font-medium ">{col.name}</h3>
           <ul>
-            {col.items.map((item) => (
-              <li className="mb-4">
+            {col.items.map((item, n) => (
+              <li className="mb-4" key={n}>
                 <Link to={item.link}>{item.label}</Link>
               </li>
             ))}
